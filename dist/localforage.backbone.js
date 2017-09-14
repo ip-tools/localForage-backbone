@@ -69,6 +69,13 @@
                 localforageKey(collection);
             }
 
+            // If there's still no key, it is probably a transient collection,
+            // i.e. a collection without representation as a real model.
+            if (!collection.sync.localforageKey) {
+                callback();
+                return;
+            }
+
             // Persist `model.collection` models' ids.
             localforage.setItem(collection.sync.localforageKey, collectionData, callback);
         }
